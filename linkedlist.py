@@ -76,10 +76,14 @@ class LinkedList:
         while node is not None:
             if self.head.get_value() == v:
                 self.head = self.head.get_next()
+                if self.head is None:
+                    self.tail = self.head
                 if not all:
                     break
             elif node.get_value() == v:
                 prev.set_next(node.get_next())
+                if node == self.tail:
+                    self.tail = prev
                 if not all:
                     break
                 node = prev
@@ -127,3 +131,11 @@ class LinkedList:
             node = node.get_next()
 
         return arr
+
+
+def create_list(*args):
+    s_list = LinkedList()
+    for i in range(len(args)):
+        s_list.add_in_tail(Node(args[i]))
+
+    return s_list
