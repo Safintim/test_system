@@ -34,6 +34,12 @@ class LinkedList:
     def __iter__(self):
         return self
 
+    def node_is_tail(self, node):
+        return node == self.tail
+
+    def is_empty(self):
+        return self.head is None
+
     def add_in_tail(self, item):
         if self.head is None:
             self.head = item
@@ -76,14 +82,16 @@ class LinkedList:
         while node is not None:
             if self.head.get_value() == v:
                 self.head = self.head.get_next()
-                if self.head is None:
+                if self.is_empty():
                     self.tail = self.head
                 if not all:
                     break
             elif node.get_value() == v:
                 prev.set_next(node.get_next())
-                if node == self.tail:
+
+                if self.node_is_tail(node):
                     self.tail = prev
+
                 if not all:
                     break
                 node = prev
@@ -115,6 +123,8 @@ class LinkedList:
             if node == afterNode:
                 newNode.set_next(node.get_next())
                 node.set_next(newNode)
+                if self.node_is_tail(node):
+                    self.tail = newNode
                 return True
             node = node.get_next()
         if afterNode is None and self.head is None:
