@@ -1,16 +1,16 @@
 class Node:
     def __init__(self, v):
-        self.__value = v
-        self.__next = None
+        self.value = v
+        self.next = None
 
     def get_value(self):
-        return self.__value
+        return self.value
 
     def get_next(self):
-        return self.__next
+        return self.next
 
     def set_next(self, n):
-        self.__next = n
+        self.next = n
 
 
 class LinkedList:
@@ -19,6 +19,20 @@ class LinkedList:
         self.head = None
         self.tail = None
         self.current = None
+
+    def first(self):
+        self.current = self.head
+
+    def __next__(self):
+        if self.current is None:
+            self.first()
+            raise StopIteration
+        temp = self.current
+        self.current = self.current.get_next()
+        return temp
+
+    def __iter__(self):
+        return self
 
     def add_in_tail(self, item):
         if self.head is None:
@@ -97,8 +111,12 @@ class LinkedList:
             if node == afterNode:
                 newNode.set_next(node.get_next())
                 node.set_next(newNode)
-                break
+                return True
             node = node.get_next()
+        if afterNode is None and self.head is None:
+            self.add_in_tail(newNode)
+            return True
+        return False
 
     def convert_list_to_array(self):
         arr = []
