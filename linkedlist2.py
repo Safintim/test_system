@@ -90,13 +90,13 @@ class LinkedList2:
 
         if self.head is None:
             self.add_in_tail(current)
-            return None
+            return False
         elif self.node_is_tail(prev):
             self.tail = current
             self.tail.set_next(None)
             self.tail.set_prev(prev)
             prev.set_next(current)
-            return None
+            return False
 
         while node_start is not None:
             if node_start == prev:
