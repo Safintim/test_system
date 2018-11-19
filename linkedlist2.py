@@ -44,20 +44,30 @@ class LinkedList2:
             node = node.get_next()
         return None
 
+    def is_empty(self):
+        return self.head is None
+
+    def node_is_tail(self, node):
+        return node == self.tail
+
     def delete(self, v):
         node = self.find(v)
-        if self.head.get_value() == v:
+
+        if node is None:
+            return None
+
+        if self.head.get_next() is None:
+            self.clean()
+        elif self.head == node:
             self.head = self.head.get_next()
             self.head.set_prev(None)
-        elif self.tail.get_value() == v:
-            self.tail = self.tail.get_prev()
+        elif self.node_is_tail(node):
+            self.tail = node.get_prev()
             self.tail.set_next(None)
         else:
-            if node is not None:
-                node.get_prev().set_next(node.get_next())
-                node.get_next().set_prev(node.get_prev())
-            else:
-                return None
+            node.get_prev().set_next(node.get_next())
+            node.get_next().set_prev(node.get_prev())
+
         return None
 
     def clean(self):
@@ -87,6 +97,28 @@ class LinkedList2:
 
             node_start = node_start.get_next()
 
+        return None
+        # node_start = self.head
+        #
+        # if self.node_is_tail(prev):
+        #     self.tail = current
+        #     self.tail.set_next(None)
+        #     self.tail.set_prev(prev)
+        #     prev.set_next(current)
+        #     return None
+        #
+        # while node_start is not None:
+        #     if node_start == prev:
+        #         current.set_next(node_start.get_next())
+        #         current.set_prev(node_start)
+        #         node_start.get_next().set_prev(current)
+        #         node_start.set_next(current)
+        #         break
+        #
+        #     node_start = node_start.get_next()
+        #
+        # return None
+
     def add_in_head(self, item):
         if self.head is None:
             self.head = item
@@ -96,3 +128,21 @@ class LinkedList2:
             item.set_next(self.head)
             self.head = item
             self.head.set_prev(None)
+
+    def convert_list_to_array(self):
+        arr = []
+        node = self.head
+
+        while node is not None:
+            arr.append(node)
+            node = node.get_next()
+
+        return arr
+
+
+def create_list(*args):
+    s_list = LinkedList2()
+    for i in range(len(args)):
+        s_list.add_in_tail(Node(args[i]))
+
+    return s_list
