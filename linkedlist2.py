@@ -108,7 +108,7 @@ class LinkedList2:
 
             node_start = node_start.get_next()
 
-        return None
+        return False
 
     def add_in_head(self, item):
         if self.head is None:
